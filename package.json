@@ -1,0 +1,28 @@
+{
+    "name": "eztore",
+    "version": "1.0.0",
+    "license": "MIT",
+    "repository": "github:javi11292/eztore",
+    "main": "dist/index.js",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "prepublishOnly": "babel src --out-dir dist"
+    },
+    "peerDependencies": {
+        "react": "^16.8.6"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.4.4",
+        "@babel/core": "^7.4.4",
+        "@babel/preset-env": "^7.4.4",
+        "@babel/preset-react": "^7.0.0"
+    },
+    "babel": {
+        "presets": [
+            "@babel/preset-env",
+            "@babel/preset-react"
+        ]
+    }
+}

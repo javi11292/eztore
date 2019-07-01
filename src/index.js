@@ -1,24 +1,18 @@
-import React, { createContext, useReducer, useContext } from "react"
+import React, { createContext, useReducer, useContext, useMemo } from "react"
 
 const Context = createContext()
 
 const Component = React.memo(({ component }) => component)
 
-const Store = React.memo(
-    /**
-     * @param {object} props
-     * @param {object} props.reducers Reducers to update store
-     */
-    ({ reducers, children }) => {
-        const Contexts = Object.entries(reducers).reduce(addContexts, { Providers: Component, Consumers: {} })
+const Store = React.memo(({ reducers, children }) => {
+    const Contexts = useMemo(() => Object.entries(reducers).reduce(addContexts, { Providers: Component, Consumers: {} }), [reducers])
 
-        return (
-            <Context.Provider value={Contexts.Consumers}>
-                <Contexts.Providers component={children} />
-            </Context.Provider>
-        )
-    }
-)
+    return (
+        <Context.Provider value={Contexts.Consumers}>
+            <Contexts.Providers component={children} />
+        </Context.Provider>
+    )
+})
 
 function addContexts(Acc, [key, entry]) {
     const Context = createContext()
@@ -34,9 +28,6 @@ function addContexts(Acc, [key, entry]) {
     return { Providers, Consumers }
 }
 
-/**
- * @param {string} key Reducer we want to use
- */
 function useStore(key) {
     const context = useContext(Context)[key]
     return useContext(context)

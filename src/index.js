@@ -1,27 +1,32 @@
 import React, { createContext, useReducer, useContext, useMemo } from "react"
 
+const ChildrenContext = createContext()
+
 const Context = createContext()
 
-const Component = React.memo(({ component }) => component)
+const Children = React.memo(props => useContext(ChildrenContext))
 
 const Store = React.memo(({ reducers, children }) => {
-    const Contexts = useMemo(() => Object.entries(reducers).reduce(addContexts, { Providers: Component, Consumers: {} }), [reducers])
+
+    const Contexts = useMemo(() => Object.entries(reducers).reduce(addContexts, { Providers: Children, Consumers: {} }), [reducers])
 
     return (
-        <Context.Provider value={Contexts.Consumers}>
-            <Contexts.Providers component={children} />
-        </Context.Provider>
+        <ChildrenContext.Provider value={children}>
+            <Context.Provider value={Contexts.Consumers}>
+                <Contexts.Providers />
+            </Context.Provider>
+        </ChildrenContext.Provider>
     )
 })
 
 function addContexts(Acc, [key, entry]) {
     const Context = createContext()
 
-    const Providers = React.memo(({ component }) =>
+    const Providers = React.memo(() => (
         <Context.Provider value={useReducer(entry.reducer, entry.state)}>
-            <Acc.Providers component={component} />
+            <Acc.Providers />
         </Context.Provider>
-    )
+    ))
 
     const Consumers = { ...Acc.Consumers, [key]: Context }
 

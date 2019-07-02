@@ -1,6 +1,6 @@
 {
     "name": "eztore",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "license": "MIT",
     "repository": "github:javi11292/eztore",
     "main": "dist/index.js",

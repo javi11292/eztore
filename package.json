@@ -1,5 +1,6 @@
 {
     "name": "eztore",
+    "description": "State manager",
     "version": "1.0.2",
     "license": "MIT",
     "repository": "github:javi11292/eztore",
@@ -8,16 +9,15 @@
         "dist"
     ],
     "scripts": {
-        "postversion": "git push --tags",
-        "prepublishOnly": "babel src --out-dir dist"
+        "prepublishOnly": "babel src --out-dir dist --copy-files"
     },
     "peerDependencies": {
         "react": "^16.8.6"
     },
     "devDependencies": {
-        "@babel/cli": "^7.4.4",
-        "@babel/core": "^7.4.4",
-        "@babel/preset-env": "^7.4.4",
+        "@babel/cli": "^7.5.5",
+        "@babel/core": "^7.5.5",
+        "@babel/preset-env": "^7.5.5",
         "@babel/preset-react": "^7.0.0"
     },
     "babel": {

@@ -1,7 +1,7 @@
 {
     "name": "eztore",
     "description": "State manager",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "license": "MIT",
     "repository": "github:javi11292/eztore",
     "main": "dist/index.js",

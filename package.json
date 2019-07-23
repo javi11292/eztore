@@ -1,8 +1,15 @@
 {
     "name": "eztore",
-    "description": "State manager",
     "version": "1.0.3",
+    "description": "State manager",
     "license": "MIT",
+    "keywords": [
+        "context",
+        "redux",
+        "state",
+        "store",
+        "eztore"
+    ],
     "repository": "github:javi11292/eztore",
     "main": "dist/index.js",
     "files": [

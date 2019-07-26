@@ -1,17 +1,12 @@
 import React from "react"
+import Store from "./Store"
 
-export interface StoreProps {
-    reducers: {
-        [key: string]: {
-            state: any,
-            reducer: (state: any, action: any) => any
-        }
-    }
-}
-
-declare const Store: React.ComponentType<StoreProps>
-
-declare function useStore(key: string): [any, Function]
+/**
+ * 
+ * @param key State to use
+ * @param onlyAction True to get only the dispatcher
+ */
+declare function useStore(key: string, onlyAction: boolean): [any, Function]
 
 export { Store }
 export { useStore }

@@ -1,5 +1,7 @@
 State manager made with hooks and context API.
 
+## [Live Demo](https://codesandbox.io/s/eztore-e5888)
+
 ## Installation
 `npm i eztore`
 

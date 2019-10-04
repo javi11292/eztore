@@ -1,4 +1,4 @@
-import React, { createContext, useMemo, useReducer } from "react"
+import React, { memo, createContext, useMemo, useReducer } from "react"
 import { ChildrenContext, RootContext } from "./contexts"
 import Children from "./Children"
 import ActionProvider from "./ActionProvider"
@@ -7,7 +7,7 @@ function addContexts(Acc, [key, entry]) {
     const ValueContext = createContext()
     const ActionContext = createContext()
 
-    const Providers = React.memo(() => {
+    const Providers = memo(function Providers() {
         const reducer = useReducer(entry.reducer, entry.state)
 
         return (
@@ -25,8 +25,7 @@ function addContexts(Acc, [key, entry]) {
     return { Providers, contexts }
 }
 
-const Store = React.memo(({ reducers, children }) => {
-
+function Store({ reducers, children }) {
     const { Providers, contexts } = useMemo(() => Object.entries(reducers).reduce(addContexts, { Providers: Children, contexts: {} }), [reducers])
 
     return (
@@ -36,6 +35,6 @@ const Store = React.memo(({ reducers, children }) => {
             </RootContext.Provider>
         </ChildrenContext.Provider>
     )
-})
+}
 
-export default Store
+export default memo(Store)

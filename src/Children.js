@@ -1,6 +1,8 @@
-import React, { useContext } from "react"
+import React, { memo, useContext } from "react"
 import { ChildrenContext } from "./contexts"
 
-const Children = React.memo(props => useContext(ChildrenContext))
+function Children() {
+    return useContext(ChildrenContext)
+}
 
-export default Children
+export default memo(Children)

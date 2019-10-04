@@ -1,9 +1,11 @@
-import React from "react"
+import React, { memo } from "react"
 
-const ActionProvider = React.memo(({ Providers, Provider, value }) => (
-    <Provider value={value}>
-        <Providers />
-    </Provider>
-))
+function ActionProvider({ Providers, Provider, value }) {
+    return (
+        <Provider value={value}>
+            <Providers />
+        </Provider>
+    )
+}
 
-export default ActionProvider
+export default memo(ActionProvider)

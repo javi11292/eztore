@@ -2,7 +2,6 @@ import React from "react"
 import Store from "./Store"
 
 /**
- * 
  * @param key State to use
  * @param onlyAction True to get only the dispatcher
  */

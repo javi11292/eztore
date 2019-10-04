@@ -3,8 +3,8 @@ import { RootContext } from "./contexts"
 import Store from "./Store"
 
 function useStore(key, onlyAction) {
-    const [Value, Action] = useContext(RootContext)[key]
-    return useContext(onlyAction ? Action : Value)
+    const [value, action] = useContext(RootContext)[key]
+    return useContext(onlyAction ? action : value)
 }
 
 export { Store }

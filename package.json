@@ -1,37 +1,31 @@
 {
-    "name": "eztore",
-    "version": "1.1.1",
-    "description": "State manager",
-    "license": "MIT",
-    "keywords": [
-        "context",
-        "redux",
-        "state",
-        "store",
-        "eztore"
-    ],
-    "repository": "github:javi11292/eztore",
-    "main": "dist/index.js",
-    "files": [
-        "dist"
-    ],
-    "scripts": {
-        "build": "babel src --out-dir dist --copy-files",
-        "prepublishOnly": "npm run build"
-    },
-    "peerDependencies": {
-        "react": "^16.8.6"
-    },
-    "devDependencies": {
-        "@babel/cli": "^7.5.5",
-        "@babel/core": "^7.5.5",
-        "@babel/preset-env": "^7.5.5",
-        "@babel/preset-react": "^7.0.0"
-    },
-    "babel": {
-        "presets": [
-            "@babel/preset-env",
-            "@babel/preset-react"
-        ]
-    }
+  "name": "eztore",
+  "version": "2.0.0",
+  "description": "State manager",
+  "main": "lib/index.js",
+  "repository": "github:javi11292/eztore",
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "babel src --out-dir lib",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "immer": "^6.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.0",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0"
+  },
+  "peerDependencies": {
+    "react": "^16.13.0"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  }
 }

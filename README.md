@@ -1,76 +1,59 @@
-State manager made with hooks and context API.
-
-## [Live Demo](https://codesandbox.io/s/eztore-e5888)
-
 ## Installation
 `npm i eztore`
 
 ## Usage
 
-Make `<Store>` the parent of the components that need to access the state (the application root is a good place if you want a global state),
-and pass him the reducers object that has the following structure:
 ```js
-{
-    [key1]: {
-        state: initialState,
-        reducer: (state, action) => newState
-    },
-    [key2]: {
-        state: initialState,
-        reducer: (state, action) => newState
-    },
-    ...
+import getStore from "eztore"
+
+export default getStore({
+  [key1]: {
+      state: initialState,
+      reducer: (state, action) => newState
+  },
+  [key2]: {
+      state: initialState,
+      reducer: (state, action) => newState
+  },
+  ...
 }
 ```
 
+The getStore function returns a hook function like `function useStore(key, subscribe = true) { ... }`. Each call to getStore will return a new store.
+
 The reducer function works like the reducer from useReducer hook, refer to [this page](https://reactjs.org/docs/hooks-reference.html#usereducer) for more details
 
-Then you can access the state by calling `useStore(key)`, which returns an array `[state, dispatch]` like useReducer
+You can access the state in any component by calling `useStore(key[, subscribe])`, which returns an array `[state, dispatch]` like useReducer. 
+If you call useStore with `subscribe = false` it will only return the dispatch function and will not rerender on state changes.
 
 ## Example
 
-reducers.js
+useStore.js
 ```js
-export default {
-    name: {
-        state: "",
-        reducer: (state, value) => value,
-    }
-}
+import getStore from "eztore"
+
+export default getStore({
+  name: {
+    state: "",
+    reducer: (state, value) => value,
+  },
+})
 ```
 
 Component.js
 ```js
 import React from "react"
-import { useStore } from "eztore"
+import useStore from "useStore"
 
-const Component = props => {
-    const [name, setName] = useStore("name")
+function Component() {
+  const [name, setName] = useStore("name")
 
-    function onChange(event){
-        setName(event.target.value)
-    }
+  function onChange(event){
+    setName(event.target.value)
+  }
 
-    return <input value={name} onChange={onChange} />
+  return <input value={name} onChange={onChange} />
 }
 
 export default Component
-```
-
-App.js
-```js
-import React from "react"
-import { Store } from "eztore"
-import reducers from "./reducers"
-import Component from "./Component"
-
-const App = props => {
-    return (
-        <Store reducers={reducers}>
-            <Component />
-        </Store>
-    )
-}
-
-export default App
 ```

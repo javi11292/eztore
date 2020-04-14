@@ -4,9 +4,9 @@
 ## Usage
 
 ```js
-import getStore from "eztore"
+import { getStore } from "eztore"
 
-export default getStore({
+export const useStore = getStore({
   [key1]: {
       state: initialState,
       reducer: (state, action) => newState
@@ -28,11 +28,11 @@ If you call useStore with `subscribe = false` it will only return the dispatch f
 
 ## Example
 
-useStore.js
+store.js
 ```js
-import getStore from "eztore"
+import { getStore } from "eztore"
 
-export default getStore({
+export const useStore = getStore({
   name: {
     state: "",
     reducer: (state, value) => value,
@@ -43,7 +43,7 @@ export default getStore({
 Component.js
 ```js
 import React from "react"
-import useStore from "useStore"
+import { useStore } from "store"
 
 function Component() {
   const [name, setName] = useStore("name")

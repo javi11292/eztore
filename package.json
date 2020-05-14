@@ -2,14 +2,10 @@
   "name": "eztore",
   "version": "3.0.0",
   "description": "State manager",
-  "main": "lib/index.js",
   "repository": "github:javi11292/eztore",
   "license": "MIT",
-  "files": [
-    "lib"
-  ],
   "scripts": {
-    "build": "babel src --out-dir lib",
+    "build": "node scripts/build",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
@@ -18,7 +14,9 @@
   "devDependencies": {
     "@babel/cli": "^7.8.0",
     "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.0"
+    "@babel/preset-env": "^7.9.0",
+    "fs-extra": "^9.0.0",
+    "typescript": "^3.9.2"
   },
   "peerDependencies": {
     "react": "^16.13.0"

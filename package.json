@@ -5,8 +5,7 @@
   "repository": "github:javi11292/eztore",
   "license": "MIT",
   "scripts": {
-    "build": "node scripts/build",
-    "prepublishOnly": "npm run build"
+    "build": "node scripts/build"
   },
   "dependencies": {
     "immer": "^6.0.0"

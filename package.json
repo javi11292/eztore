@@ -25,5 +25,6 @@
     "presets": [
       "@babel/preset-env"
     ]
-  }
+  },
+  "sideEffects": false
 }

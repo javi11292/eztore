@@ -6,7 +6,7 @@ const packageJson = require("../package.json")
 
 fs.removeSync("lib")
 spawnSync("babel src --out-dir lib", options)
-spawnSync("tsc --diagnostics --allowJs --declaration --emitDeclarationOnly  --removeComments  --skipLibCheck  --outDir lib src/index", options)
+spawnSync("tsc --allowJs --declaration --emitDeclarationOnly  --removeComments  --skipLibCheck  --outDir lib src/index", options)
 
 delete packageJson.devDependencies
 fs.writeJsonSync("lib/package.json", packageJson)

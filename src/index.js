@@ -1,21 +1,10 @@
 import { useEffect, useState, useCallback } from "react"
-import produce from "immer"
+
+function addCallbacks(callbacks, key) {
+  return { ...callbacks, [key]: new Set() }
+}
 
 export function getStore(values) {
-  function useStore(key, subscribe = true) {
-    const update = useCallback(value => store.update(key, value), [key])
-
-    const [state, setState] = useState(store.get(key))
-
-    useEffect(() => {
-      if (!subscribe) return
-      store.addCallback(key, setState)
-      return () => store.removeCallback(key, setState)
-    }, [key, subscribe])
-
-    return subscribe ? [state, update] : update
-  }
-
   const store = {
     get(key) {
       return this.values[key].state
@@ -33,20 +22,29 @@ export function getStore(values) {
       const field = this.values[key]
       const { state, reducer } = field
 
-      const nextState = produce(state, draftState => reducer(draftState, value))
-      if (state === nextState) return
-      field.state = nextState
-
-      this.callbacks[key].forEach(callback => callback(nextState))
+      field.state = reducer(state, value)
+      if (state !== field.state) {
+        this.callbacks[key].forEach(callback => callback(field.state))
+      }
     },
 
     values,
     callbacks: Object.keys(values).reduce(addCallbacks, {}),
   }
 
-  return useStore
-}
+  function useStore(key, subscribe = true) {
+    const [state, setState] = useState(store.get(key))
 
-function addCallbacks(callbacks, key) {
-  return { ...callbacks, [key]: new Set() }
+    const update = useCallback(value => store.update(key, value), [key])
+
+    useEffect(() => {
+      if (!subscribe) return
+      store.addCallback(key, setState)
+      return () => store.removeCallback(key, setState)
+    }, [key, subscribe])
+
+    return subscribe ? [state, update] : update
+  }
+
+  return useStore
 }

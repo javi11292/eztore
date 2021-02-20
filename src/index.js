@@ -1,50 +1,49 @@
 import { useEffect, useState, useCallback } from "react"
+import { produce } from "immer"
 
 function addCallbacks(callbacks, key) {
   return { ...callbacks, [key]: new Set() }
 }
 
 export function getStore(values) {
-  const store = {
-    get(key) {
-      return this.values[key].state
-    },
+  function get(key) {
+    return values[key].state
+  }
 
-    addCallback(key, callback) {
-      this.callbacks[key].add(callback)
-    },
+  function set(key, value) {
+    const field = values[key]
+    const { state, reducer } = field
 
-    removeCallback(key, callback) {
-      this.callbacks[key].delete(callback)
-    },
+    field.state = produce(state, draftState => reducer(draftState, value))
 
-    update(key, value) {
-      const field = this.values[key]
-      const { state, reducer } = field
+    if (state !== field.state) {
+      callbacks[key].forEach(callback => callback(field.state))
+    }
+  }
 
-      field.state = reducer(state, value)
-      if (state !== field.state) {
-        this.callbacks[key].forEach(callback => callback(field.state))
-      }
-    },
+  function addCallback(key, callback) {
+    callbacks[key].add(callback)
+  }
 
-    values,
-    callbacks: Object.keys(values).reduce(addCallbacks, {}),
+  function deleteCallback(key, callback) {
+    callbacks[key].delete(callback)
   }
 
   function useStore(key, subscribe = true) {
-    const [state, setState] = useState(store.get(key))
+    const [state, setState] = useState(get(key))
 
-    const update = useCallback(value => store.update(key, value), [key])
+    const updateState = useCallback(value => set(key, value), [key])
 
     useEffect(() => {
       if (!subscribe) return
-      store.addCallback(key, setState)
-      return () => store.removeCallback(key, setState)
+      addCallback(key, setState)
+      return () => deleteCallback(key, setState)
     }, [key, subscribe])
 
-    return subscribe ? [state, update] : update
+    return subscribe ? [state, updateState] : updateState
   }
+
+  const callbacks = Object.keys(values).reduce(addCallbacks, {})
 
   return useStore
 }

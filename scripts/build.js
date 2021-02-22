@@ -5,7 +5,7 @@ const options = { stdio: "inherit", shell: true }
 const { name, version, description, repository, license, dependencies, peerDependencies, sideEffects } = require("../package.json")
 
 fs.removeSync("lib")
-spawnSync("babel src --out-dir lib", options)
-spawnSync("tsc --allowJs --declaration --emitDeclarationOnly  --removeComments  --skipLibCheck  --outDir lib src/index", options)
+spawnSync("tsc", options)
+fs.copySync("src/index.d.ts", "lib/index.d.ts")
 
 fs.writeJsonSync("lib/package.json", { name, version, description, repository, license, dependencies, peerDependencies, sideEffects }, { spaces: 2 })

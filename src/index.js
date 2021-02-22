@@ -10,11 +10,11 @@ export function getStore(values) {
     return values[key].state
   }
 
-  function set(key, value) {
+  function set(key, action) {
     const field = values[key]
-    const { state, reducer } = field
+    const { state, reducers } = field
 
-    field.state = produce(state, draftState => reducer(draftState, value))
+    field.state = produce(state, draftState => reducers[action.type](draftState, action.payload))
 
     if (state !== field.state) {
       callbacks[key].forEach(callback => callback(field.state))
@@ -32,7 +32,7 @@ export function getStore(values) {
   function useStore(key, subscribe = true) {
     const [state, setState] = useState(get(key))
 
-    const updateState = useCallback(value => set(key, value), [key])
+    const dispatch = useCallback(action => set(key, action), [key])
 
     useEffect(() => {
       if (!subscribe) return
@@ -40,7 +40,7 @@ export function getStore(values) {
       return () => deleteCallback(key, setState)
     }, [key, subscribe])
 
-    return subscribe ? [state, updateState] : updateState
+    return subscribe ? [state, dispatch] : dispatch
   }
 
   const callbacks = Object.keys(values).reduce(addCallbacks, {})

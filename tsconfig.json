@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "target": "ES6",
+    "outDir": "./lib",
+    "lib": [
+      "ESNext"
+    ],
+  },
+  "include": [
+    "./src"
+  ]
+}

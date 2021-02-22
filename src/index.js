@@ -10,11 +10,11 @@ export function getStore(values) {
     return values[key].state
   }
 
-  function set(key, action) {
+  function set(key, { type = "default", payload }) {
     const field = values[key]
     const { state, reducers } = field
 
-    field.state = produce(state, draftState => reducers[action.type](draftState, action.payload))
+    field.state = produce(state, draftState => reducers[type](draftState, payload))
 
     if (state !== field.state) {
       callbacks[key].forEach(callback => callback(field.state))

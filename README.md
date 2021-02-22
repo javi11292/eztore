@@ -9,19 +9,21 @@ import { getStore } from "eztore"
 export const useStore = getStore({
   [key1]: {
       state: initialState,
-      reducer: (state, action) => newState
+      reducers: {
+        [reducer]: (state, payload) => newState
+      }
   },
   [key2]: {
       state: initialState,
-      reducer: (state, action) => newState
+      reducers: {
+        [reducer]: (state, payload) => newState
+      }
   },
   ...
 }
 ```
 
 The getStore function returns a hook function like `function useStore(key, subscribe = true) { ... }`. Each call to getStore will return a new store.
-
-The reducer function works like the reducer from useReducer hook, refer to [this page](https://reactjs.org/docs/hooks-reference.html#usereducer) for more details
 
 You can access the state in any component by calling `useStore(key[, subscribe])`, which returns an array `[state, dispatch]` like useReducer. 
 If you call useStore with `subscribe = false` it will only return the dispatch function and will not rerender on state changes.
@@ -35,7 +37,14 @@ import { getStore } from "eztore"
 export const useStore = getStore({
   name: {
     state: "",
-    reducer: (state, value) => value,
+    reducers: {
+      default(state, payload) {
+        return payload
+      },
+      upperCase(state, payload) {
+        return payload.toUpperCase()
+      }
+    }
   },
 })
 ```
@@ -46,10 +55,12 @@ import React from "react"
 import { useStore } from "store"
 
 function Component() {
-  const [name, setName] = useStore("name")
+  const [name, dispatchName] = useStore("name")
 
-  function onChange(event){
-    setName(event.target.value)
+  function onChange(event) {
+    dispatchName({ payload: event.target.value })
+    // if we want uppercase
+    // dispatchName({ type: "upperCase", payload: event.target.value })
   }
 
   return <input value={name} onChange={onChange} />

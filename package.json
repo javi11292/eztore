@@ -8,11 +8,9 @@
     "build": "node scripts/build",
     "deploy": "npm run build && cd lib && npm publish"
   },
-  "dependencies": {
-    "immer": "^8.0.0"
-  },
   "devDependencies": {
     "eslint": "^7.19.0",
+    "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-react-app": "^6.0.0",
     "fs-extra": "^9.1.0",
     "typescript": "^4.1.0"
@@ -21,7 +19,23 @@
     "react": "^17.0.0"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "airbnb-base"
+    ],
+    "rules": {
+      "consistent-return": "off",
+      "import/no-extraneous-dependencies": "off",
+      "import/prefer-default-export": "off",
+      "no-use-before-define": "off"
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "paths": "src"
+        }
+      }
+    }
   },
   "sideEffects": false
 }

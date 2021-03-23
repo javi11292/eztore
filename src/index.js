@@ -1,49 +1,48 @@
-import { useEffect, useState, useCallback } from "react"
-import { produce } from "immer"
+import { useCallback, useEffect, useState } from 'react';
 
 function addCallbacks(callbacks, key) {
-  return { ...callbacks, [key]: new Set() }
+  return { ...callbacks, [key]: new Set() };
 }
 
 export function getStore(values) {
   function get(key) {
-    return values[key].state
+    return values[key].state;
   }
 
-  function set(key, { type = "default", payload }) {
-    const field = values[key]
-    const { state, reducers } = field
+  function set(key, { type = 'default', payload }) {
+    const field = values[key];
+    const { state, reducers } = field;
 
-    field.state = produce(state, draftState => reducers[type](draftState, payload))
+    field.state = reducers[type](state, payload);
 
     if (state !== field.state) {
-      callbacks[key].forEach(callback => callback(field.state))
+      callbacks[key].forEach((callback) => callback(field.state));
     }
   }
 
   function addCallback(key, callback) {
-    callbacks[key].add(callback)
+    callbacks[key].add(callback);
   }
 
   function deleteCallback(key, callback) {
-    callbacks[key].delete(callback)
+    callbacks[key].delete(callback);
   }
 
   function useStore(key, subscribe = true) {
-    const [state, setState] = useState(get(key))
+    const [state, setState] = useState(get(key));
 
-    const dispatch = useCallback(action => set(key, action), [key])
+    const dispatch = useCallback((action) => set(key, action), [key]);
 
     useEffect(() => {
-      if (!subscribe) return
-      addCallback(key, setState)
-      return () => deleteCallback(key, setState)
-    }, [key, subscribe])
+      if (!subscribe) return;
+      addCallback(key, setState);
+      return () => deleteCallback(key, setState);
+    }, [key, subscribe]);
 
-    return subscribe ? [state, dispatch] : dispatch
+    return subscribe ? [state, dispatch] : dispatch;
   }
 
-  const callbacks = Object.keys(values).reduce(addCallbacks, {})
+  const callbacks = Object.keys(values).reduce(addCallbacks, {});
 
-  return useStore
+  return useStore;
 }

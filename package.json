@@ -26,6 +26,7 @@
       "consistent-return": "off",
       "no-use-before-define": "off",
       "import/prefer-default-export": "off",
+      "react/jsx-filename-extension": "off",
       "react/jsx-props-no-spreading": "off",
       "react/prop-types": "off",
       "react/react-in-jsx-scope": "off"

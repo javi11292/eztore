@@ -10,8 +10,7 @@
   },
   "devDependencies": {
     "eslint": "^7.19.0",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-react-app": "^6.0.0",
+    "eslint-config-airbnb": "^18.2.0",
     "fs-extra": "^9.1.0",
     "typescript": "^4.1.0"
   },
@@ -19,15 +18,17 @@
     "react": "^17.0.0"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "airbnb-base"
-    ],
+    "extends": "airbnb",
+    "env": {
+      "browser": true
+    },
     "rules": {
       "consistent-return": "off",
-      "import/no-extraneous-dependencies": "off",
+      "no-use-before-define": "off",
       "import/prefer-default-export": "off",
-      "no-use-before-define": "off"
+      "react/jsx-props-no-spreading": "off",
+      "react/prop-types": "off",
+      "react/react-in-jsx-scope": "off"
     },
     "settings": {
       "import/resolver": {

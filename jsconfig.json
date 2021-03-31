@@ -3,7 +3,6 @@
     "skipLibCheck": true,
     "noEmit": false,
     "outDir": "lib",
-    "moduleResolution": "node",
     "lib": [
       "ESNext"
     ],

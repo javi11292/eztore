@@ -1,6 +1,7 @@
 {
   "name": "eztore",
   "version": "6.0.4",
+  "type": "module",
   "description": "State manager",
   "repository": "github:javi11292/eztore",
   "license": "MIT",
@@ -26,6 +27,7 @@
       "no-use-before-define": "off",
       "import/no-extraneous-dependencies": "off",
       "import/prefer-default-export": "off",
+      "import/extensions": "off",
       "react/jsx-filename-extension": "off",
       "react/jsx-props-no-spreading": "off",
       "react/prop-types": "off",

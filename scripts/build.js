@@ -1,13 +1,13 @@
-const fs = require('fs-extra');
-const { spawnSync } = require('child_process');
+import { spawnSync } from 'child_process';
+import fs from 'fs-extra';
 
-const options = { stdio: 'inherit', shell: true };
 const {
   name, version, description, repository, license, dependencies, peerDependencies, sideEffects,
-} = require('../package.json');
+} = fs.readJSONSync('package.json');
 
 fs.removeSync('lib');
-spawnSync('tsc -b jsconfig.json', options);
+spawnSync('tsc -b jsconfig.json', { stdio: 'inherit', shell: true });
+
 fs.copySync('src/index.d.ts', 'lib/index.d.ts');
 fs.copySync('README.md', 'lib/README.md');
 

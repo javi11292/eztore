@@ -9,6 +9,7 @@
     "deploy": "npm run build && cd lib && npm publish"
   },
   "devDependencies": {
+    "@typescript-eslint/parser": "^4.20.0",
     "eslint": "^7.19.0",
     "eslint-config-airbnb": "^18.2.0",
     "fs-extra": "^9.1.0",
@@ -19,12 +20,11 @@
   },
   "eslintConfig": {
     "extends": "airbnb",
-    "env": {
-      "browser": true
-    },
+    "parser": "@typescript-eslint/parser",
     "rules": {
       "consistent-return": "off",
       "no-use-before-define": "off",
+      "import/no-extraneous-dependencies": "off",
       "import/prefer-default-export": "off",
       "react/jsx-filename-extension": "off",
       "react/jsx-props-no-spreading": "off",
@@ -37,6 +37,9 @@
           "paths": "src"
         }
       }
+    },
+    "env": {
+      "browser": true
     }
   },
   "sideEffects": false

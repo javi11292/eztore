@@ -7,7 +7,7 @@ const {
 } = require('../package.json');
 
 fs.removeSync('lib');
-spawnSync('tsc', options);
+spawnSync('tsc -b jsconfig.json', options);
 fs.copySync('src/index.d.ts', 'lib/index.d.ts');
 fs.copySync('README.md', 'lib/README.md');
 

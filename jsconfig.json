@@ -1,14 +1,14 @@
 {
   "compilerOptions": {
-    "allowJs": true,
     "skipLibCheck": true,
+    "noEmit": false,
+    "outDir": "lib",
     "moduleResolution": "node",
-    "outDir": "./lib",
     "lib": [
       "ESNext"
     ],
   },
   "include": [
-    "./src"
+    "src"
   ]
 }
